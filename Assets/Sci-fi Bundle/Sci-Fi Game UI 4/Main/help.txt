@@ -1,0 +1,14 @@
+All the psd files are layered and grouped.
+
+To edit the pie charts you have to delete the layer mask, select the portion with the marquee tool and add the layer mask again
+
+if you need any help please don't be hesitate to contact me via my private email address in the profile page.
+
+Free fonts used are
+
+Neuropol = http://www.dafont.com/neuropol.font
+bebas - http://www.dafont.com/bebas.font
+
+calibri (Windows embeded default font) 
+
+Thank you very much fpr purchasing my file
