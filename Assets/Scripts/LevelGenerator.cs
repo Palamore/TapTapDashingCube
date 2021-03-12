@@ -18,11 +18,12 @@ public class LevelGenerator : MonoBehaviour
         "5982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989"
         };
 
+    private int lvIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        lvIndex = Random.Range(0, 10) * 50;
 
     }
 
