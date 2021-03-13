@@ -20,7 +20,7 @@ public class LevelGenerator : MonoBehaviour
 
     private int lvIndex;
 
-    // Start is called before the first frame update
+    //asdasd
     void Start()
     {
         lvIndex = Random.Range(0, 10) * 50;
