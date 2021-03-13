@@ -19,6 +19,7 @@ public class LevelGenerator : MonoBehaviour
         };
 
     private int lvIndex;
+    private string sss = "sss";
 
     //asdasd
     void Start()
