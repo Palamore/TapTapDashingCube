@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         return instance;
     }
 
+    public Camera MainCamera = null;
     public GameObject LPointPrefab;
     public GameObject RPointPrefab;
     private GameObject cube;
@@ -23,18 +24,23 @@ public class GameManager : MonoBehaviour
     public GameObject LPoint;
     public GameObject RPoint;
 
+    public Transform CameraTransform;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         cube = CubeHandler.Instance().gameObject;
+        CameraTransform = MainCamera.transform;
         MakePoints();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CameraTransform.position = cube.transform.position + new Vector3(
+            0.0f, 6.0f - cube.transform.position.y, -3.0f);
     }
 
 

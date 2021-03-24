@@ -149,12 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e8919fdc0d44942adb05997844601f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 534669904}
   LPointPrefab: {fileID: 5047407121697962241, guid: 80db3bd833ebb1b489febf1041a03d0a,
     type: 3}
   RPointPrefab: {fileID: 6701851000149827778, guid: 240662f637d75ab4e9b87773749075c5,
     type: 3}
   LPoint: {fileID: 0}
   RPoint: {fileID: 0}
+  CameraTransform: {fileID: 0}
 --- !u!4 &169632829
 Transform:
   m_ObjectHideFlags: 0
