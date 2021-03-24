@@ -82,6 +82,7 @@ public class CubeHandler : MonoBehaviour
             CancelInvoke("rotatingLeft");
             transform.parent = null;
             transform.rotation = Quaternion.Euler(0.0f, 45.0f, 0.0f);
+            transform.position = new Vector3(transform.position.x, 0.6f, transform.position.z);
             invokeCnt = 0;
             GM.DestroyPoints();
             GM.MakePoints();
@@ -99,6 +100,7 @@ public class CubeHandler : MonoBehaviour
             CancelInvoke("rotatingRight");
             transform.parent = null;
             transform.rotation = Quaternion.Euler(0.0f, 45.0f, 0.0f);
+            transform.position = new Vector3(transform.position.x, 0.6f, transform.position.z);
             invokeCnt = 0;
             GM.DestroyPoints();
             GM.MakePoints();
