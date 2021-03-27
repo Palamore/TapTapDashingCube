@@ -20,6 +20,7 @@ public class CubeHandler : MonoBehaviour
     private int invokeCnt;
     public Transform RotationPoint;
     private GameManager GM;
+    private UIManager UM;
     private float moveSpeed = 2.0f;
     private bool inputFlag;
 
@@ -27,6 +28,7 @@ public class CubeHandler : MonoBehaviour
     {
         invokeCnt = 0;
         GM = GameManager.Instance();
+        UM = UIManager.Instance();
         inputFlag = true;
     }
 
@@ -42,16 +44,10 @@ public class CubeHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                RotationPoint = GM.LPoint.transform;
-                transform.SetParent(RotationPoint);
-                cubeMoveAnimation.Play("CubeMoveLeft");
                 MoveLeft();
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-                RotationPoint = GM.RPoint.transform;
-                transform.SetParent(RotationPoint);
-                cubeMoveAnimation.Play("CubeMoveRight");
                 MoveRight();
             }
         }
@@ -60,6 +56,9 @@ public class CubeHandler : MonoBehaviour
 
     public void MoveLeft()
     {
+        RotationPoint = GM.LPoint.transform;
+        transform.SetParent(RotationPoint);
+        cubeMoveAnimation.Play("CubeMoveLeft");
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 320.0f);
@@ -67,6 +66,9 @@ public class CubeHandler : MonoBehaviour
 
     public void MoveRight()
     {
+        RotationPoint = GM.RPoint.transform;
+        transform.SetParent(RotationPoint);
+        cubeMoveAnimation.Play("CubeMoveRight");
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingRight", 0.0f, 1.0f / 320.0f);
@@ -87,6 +89,7 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
+            UM.AddScore();
         }
     }
 
@@ -105,6 +108,7 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
+            UM.AddScore();
         }
     }
 
