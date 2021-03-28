@@ -21,7 +21,7 @@ public class CubeHandler : MonoBehaviour
     public Transform RotationPoint;
     private GameManager GM;
     private UIManager UM;
-    private float moveSpeed = 2.0f;
+    private float moveSpeed = 5.0f;
     private bool inputFlag;
 
     void Start()
@@ -40,38 +40,50 @@ public class CubeHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(inputFlag)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                MoveLeft();
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                MoveRight();
-            }
-        }
+
+       if (Input.GetKeyDown(KeyCode.A))
+       {
+           MoveLeft();
+       }
+       if (Input.GetKeyDown(KeyCode.D))
+       {
+           MoveRight();
+       }
 
     }
 
     public void MoveLeft()
     {
+        if (!inputFlag) return;
+        if(GM.GameMode == GameModeEnum.RhythmAction)
+        {
+            if (!GM.ValidateNodeDistance())
+                return;
+        }
+        UM.AddScore();
         RotationPoint = GM.LPoint.transform;
         transform.SetParent(RotationPoint);
         cubeMoveAnimation.Play("CubeMoveLeft");
         inputFlag = false;
         invokeCnt = 0;
-        InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 320.0f);
+        InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 800.0f);
     }
 
     public void MoveRight()
     {
+        if (!inputFlag) return;
+        if (GM.GameMode == GameModeEnum.RhythmAction)
+        {
+            if (!GM.ValidateNodeDistance())
+                return;
+        }
+        UM.AddScore();
         RotationPoint = GM.RPoint.transform;
         transform.SetParent(RotationPoint);
         cubeMoveAnimation.Play("CubeMoveRight");
         inputFlag = false;
         invokeCnt = 0;
-        InvokeRepeating("rotatingRight", 0.0f, 1.0f / 320.0f);
+        InvokeRepeating("rotatingRight", 0.0f, 1.0f / 800.0f);
     }
 
     private void rotatingLeft()
@@ -89,7 +101,6 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
-            UM.AddScore();
         }
     }
 
@@ -108,7 +119,6 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
-            UM.AddScore();
         }
     }
 

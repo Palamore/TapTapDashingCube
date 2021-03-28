@@ -19,29 +19,77 @@ public class UIManager : MonoBehaviour
 
     public Text MarathonScoreText = null;
     public int MarathonScore = 0;
-    private Animation scoreFx = null;
+    private Animation marathonScoreFx = null;
+
+
+    public Text TimeAttackTimerText = null;
+    private int timeAttackRemainTime = 90;
+
+
+    public GameObject RhythmActionNodesBar;
+
+    public Transform LeftEndNodePos;
+    public Transform RightEndNodePos;
+
 
 
     void Awake()
     {
-        InitScores();
         
     }
 
-    private void InitScores()
+    public void InitScores(GameModeEnum gameMode)
     {
-        if(MarathonScoreText != null)
+        if (MarathonScoreText != null)
         {
             MarathonScore = 0;
             MarathonScoreText.text = MarathonScore.ToString();
         }
-        scoreFx = GetComponent<Animation>();
+        marathonScoreFx = MarathonScoreText.gameObject.GetComponent<Animation>();
+
+        switch (gameMode)
+        {
+            case GameModeEnum.Marathon:
+
+                break;
+            case GameModeEnum.TimeAttack:
+                TimeAttackTimerText.gameObject.SetActive(true);
+                StartCoroutine(timer());
+                break;
+            case GameModeEnum.RhythmAction:
+                RhythmActionNodesBar.SetActive(true);
+                break;
+            default: Debug.LogError("GameMode needs to be set as actual type");
+                break;
+        }
+
     }
 
     public void AddScore()
     {
         MarathonScore++;
         MarathonScoreText.text = MarathonScore.ToString();
+        marathonScoreFx.Play("ScoreAnim");
+    }
+
+
+    IEnumerator timer()
+    {
+        while(timeAttackRemainTime != 0)
+        {
+            TimeAttackTimerText.text = TimeFormatting(timeAttackRemainTime);
+            timeAttackRemainTime--;
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
+
+
+
+    private string TimeFormatting(int time)
+    {
+        int min = time / 60;
+        int sec = time % 60;
+        return min.ToString() + ":" + sec.ToString();
     }
 
 

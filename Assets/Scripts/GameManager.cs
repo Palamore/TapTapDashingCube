@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameModeEnum
+{
+    Marathon = 0,
+    TimeAttack,
+    RhythmAction
+}
+
 public class GameManager : MonoBehaviour
 {
 
@@ -16,6 +23,8 @@ public class GameManager : MonoBehaviour
         return instance;
     }
 
+    private UIManager UM;
+
     public Camera MainCamera = null;
     public GameObject LPointPrefab;
     public GameObject RPointPrefab;
@@ -26,14 +35,26 @@ public class GameManager : MonoBehaviour
 
     public Transform CameraTransform;
 
+    public GameModeEnum GameMode;
 
+    public GameObject RythmNodePrefab;
+
+    private Queue<GameObject> leftNodesQueue = new Queue<GameObject>();
+    private Queue<GameObject> rightNodesQueue = new Queue<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        UM = UIManager.Instance();
         cube = CubeHandler.Instance().gameObject;
         CameraTransform = MainCamera.transform;
         MakePoints();
+
+        UM.InitScores(GameMode);
+        if(GameMode == GameModeEnum.RhythmAction)
+        {
+            StartCoroutine(MakeRhythmNodes());
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +75,42 @@ public class GameManager : MonoBehaviour
     {
         Destroy(LPoint);
         Destroy(RPoint);
+    }
+
+    public bool ValidateNodeDistance()
+    {
+        float dist = (rightNodesQueue.Peek().transform.position.x - leftNodesQueue.Peek().transform.position.x);
+
+        if(rightNodesQueue.Count != 0)
+        {
+            GameObject Rnode = rightNodesQueue.Dequeue();
+            Destroy(Rnode);
+            GameObject Lnode = leftNodesQueue.Dequeue();
+            Destroy(Lnode);
+        }
+
+        if (dist < 0.0f || dist > 40.0f)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    IEnumerator MakeRhythmNodes()
+    {
+        while(true)
+        {
+            GameObject leftNode = Instantiate(RythmNodePrefab, UM.LeftEndNodePos.position, Quaternion.identity) as GameObject;
+            leftNode.transform.SetParent(UM.LeftEndNodePos);
+            leftNode.GetComponent<RhythmActionNode>().IsLeft = true;
+            leftNodesQueue.Enqueue(leftNode);
+            GameObject rightNode = Instantiate(RythmNodePrefab, UM.RightEndNodePos.position, Quaternion.identity) as GameObject;
+            rightNode.transform.SetParent(UM.RightEndNodePos);
+            rightNode.GetComponent<RhythmActionNode>().IsLeft = false;
+            rightNodesQueue.Enqueue(rightNode);
+
+            yield return new WaitForSeconds(0.8f);
+        }
     }
 
 
