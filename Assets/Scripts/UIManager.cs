@@ -31,13 +31,6 @@ public class UIManager : MonoBehaviour
     public Transform LeftEndNodePos;
     public Transform RightEndNodePos;
 
-
-
-    void Awake()
-    {
-        
-    }
-
     public void InitScores(GameModeEnum gameMode)
     {
         if (MarathonScoreText != null)

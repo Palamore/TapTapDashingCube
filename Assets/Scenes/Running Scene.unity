@@ -264,7 +264,7 @@ MonoBehaviour:
   LPoint: {fileID: 0}
   RPoint: {fileID: 0}
   CameraTransform: {fileID: 0}
-  GameMode: 0
+  GameMode: 2
   RythmNodePrefab: {fileID: 8879734307464629593, guid: 135595f0691bb474d892eae574376a69,
     type: 3}
 --- !u!4 &169632829
