@@ -17,9 +17,24 @@ public class UIManager : MonoBehaviour
         return instance;
     }
 
+    LevelGenerator LG;
+
+    private void Start()
+    {
+        LG = LevelGenerator.Instance();
+    }
+
     public Text MarathonScoreText = null;
     public int MarathonScore = 0;
     private Animation marathonScoreFx = null;
+    public GameObject MarathonProgressBar = null;
+    private float progressBarValue = 100.0f;
+    private float progressBarTension = 16.0f;
+    public float ProgressBarTension
+    {
+        get { return progressBarTension; }
+        set { progressBarTension = value; }
+    }
 
 
     public Text TimeAttackTimerText = null;
@@ -30,6 +45,11 @@ public class UIManager : MonoBehaviour
 
     public Transform LeftEndNodePos;
     public Transform RightEndNodePos;
+
+
+    public int NodeCount = 0;
+    private int jumpCount = 0;
+
 
     public void InitScores(GameModeEnum gameMode)
     {
@@ -43,11 +63,11 @@ public class UIManager : MonoBehaviour
         switch (gameMode)
         {
             case GameModeEnum.Marathon:
-
+                StartCoroutine(marathonTimer());
                 break;
             case GameModeEnum.TimeAttack:
                 TimeAttackTimerText.gameObject.SetActive(true);
-                StartCoroutine(timer());
+                StartCoroutine(timeAttackTimer());
                 break;
             case GameModeEnum.RhythmAction:
                 RhythmActionNodesBar.SetActive(true);
@@ -61,21 +81,60 @@ public class UIManager : MonoBehaviour
     public void AddScore()
     {
         MarathonScore++;
+        jumpCount++;
+        if(MarathonScore % 10 == 0)
+        { // 10점씩 얻을 때마다 Bar의 감소 속도가 빨라짐.
+            progressBarTension+= 0.2f;
+        }
         MarathonScoreText.text = MarathonScore.ToString();
         marathonScoreFx.Play("ScoreAnim");
+
+        if(jumpCount == NodeCount - 10)
+        {
+            LG.MakeNextLevel();
+        }
+        else if(jumpCount == NodeCount)
+        {
+            LG.SendNodeCount();
+            LG.SendRandValue();
+            jumpCount = 0;
+        }
     }
 
 
-    IEnumerator timer()
+    IEnumerator timeAttackTimer()
     {
-        while(timeAttackRemainTime != 0)
+        while(timeAttackRemainTime > 0)
         {
             TimeAttackTimerText.text = TimeFormatting(timeAttackRemainTime);
             timeAttackRemainTime--;
             yield return new WaitForSeconds(1.0f);
         }
+        StopCoroutine(timeAttackTimer());
+        /// TO DO : 게임 오버 연출
+        Debug.Log("Game Over!");
+
     }
 
+    IEnumerator marathonTimer()
+    {
+        while(progressBarValue > 0)
+        {
+            progressBarValue -= progressBarTension / 60.0f;
+            MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
+            yield return new WaitForSeconds(1.0f / 60.0f);
+        }
+        StopCoroutine(marathonTimer());
+        /// TO DO : 게임 오버 연출
+        Debug.Log("Game Over!");
+    }
+
+    public void GainPlayTime()
+    {
+        progressBarValue += 5.0f;
+        if (progressBarValue >= 100.0f) progressBarValue = 100.0f;
+        MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
+    }
 
 
     private string TimeFormatting(int time)

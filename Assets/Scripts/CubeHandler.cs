@@ -16,24 +16,43 @@ public class CubeHandler : MonoBehaviour
         return instance;
     }
 
+    private const int generateIteration = 10;
     private Animation cubeMoveAnimation;
     private int invokeCnt;
     public Transform RotationPoint;
     private GameManager GM;
     private UIManager UM;
+    private LevelGenerator LG;
     private float moveSpeed = 5.0f;
     private bool inputFlag;
+    private bool dirRightFlag;
+
+    public int[] DirValidationValue = new int[generateIteration];
+
+    private int dirValidationIndex;
+    public int DirValidationIndex
+    {
+        get { return dirValidationIndex; }
+        set
+        {
+            dirValidationIndex = value;
+        }
+    }
 
     void Start()
     {
         invokeCnt = 0;
-        GM = GameManager.Instance();
-        UM = UIManager.Instance();
+
         inputFlag = true;
+        dirRightFlag = true;
+        DirValidationIndex = 0;
     }
 
     void Awake()
     {
+        GM = GameManager.Instance();
+        UM = UIManager.Instance();
+        LG = LevelGenerator.Instance();
         cubeMoveAnimation = this.GetComponent<Animation>();
     }
 
@@ -52,6 +71,11 @@ public class CubeHandler : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision Enter!");
+    }
+
     public void MoveLeft()
     {
         if (!inputFlag) return;
@@ -60,13 +84,14 @@ public class CubeHandler : MonoBehaviour
             if (!GM.ValidateNodeDistance())
                 return;
         }
-        UM.AddScore();
+
         RotationPoint = GM.LPoint.transform;
         transform.SetParent(RotationPoint);
         cubeMoveAnimation.Play("CubeMoveLeft");
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 800.0f);
+        LG.DestroyGarbageNode();
     }
 
     public void MoveRight()
@@ -77,13 +102,14 @@ public class CubeHandler : MonoBehaviour
             if (!GM.ValidateNodeDistance())
                 return;
         }
-        UM.AddScore();
+
         RotationPoint = GM.RPoint.transform;
         transform.SetParent(RotationPoint);
         cubeMoveAnimation.Play("CubeMoveRight");
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingRight", 0.0f, 1.0f / 800.0f);
+        LG.DestroyGarbageNode();
     }
 
     private void rotatingLeft()
@@ -101,6 +127,9 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
+            validateDirection(false);
+            UM.AddScore();
+            UM.GainPlayTime();
         }
     }
 
@@ -119,9 +148,28 @@ public class CubeHandler : MonoBehaviour
             GM.DestroyPoints();
             GM.MakePoints();
             inputFlag = true;
+            validateDirection(true);
+            UM.AddScore();
+            UM.GainPlayTime();
         }
     }
 
+
+    private void validateDirection(bool isRight)
+    {
+        if(dirRightFlag != isRight)
+        {
+            /// TO DO:: 게임 오버 연출
+            Debug.Log("Game Over!");
+            return;
+        }
+        DirValidationValue[DirValidationIndex]--;
+        if(DirValidationValue[DirValidationIndex] == 0)
+        {
+            DirValidationIndex++;
+            dirRightFlag = !dirRightFlag;
+        }
+    }
 
 
 }
