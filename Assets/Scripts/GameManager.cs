@@ -9,6 +9,17 @@ public enum GameModeEnum
     RhythmAction
 }
 
+/// <summary>
+/// TODO :
+/// 배경 디자인            10
+/// 게임오버 연출           1
+/// 점프 연출 (파티클)      1
+/// 프로그레스바 연출,      1
+/// 점수 애니메이션 연출    1
+/// 나비 연출               ? 
+/// </summary>
+
+
 public class GameManager : MonoBehaviour
 {
 
