@@ -23,9 +23,11 @@ public class CubeHandler : MonoBehaviour
     private GameManager GM;
     private UIManager UM;
     private LevelGenerator LG;
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 6.0f;
     private bool inputFlag;
     private bool dirRightFlag;
+
+    private bool jumpFlag; /// TODO :: 입력 한번만, 플래그 세워서 받아주기.
 
     public int[] DirValidationValue = new int[generateIteration];
 
@@ -45,6 +47,7 @@ public class CubeHandler : MonoBehaviour
 
         inputFlag = true;
         dirRightFlag = true;
+        jumpFlag = false;
         DirValidationIndex = 0;
     }
 
@@ -78,7 +81,12 @@ public class CubeHandler : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (!inputFlag) return;
+        if (!inputFlag)
+        {
+            jumpFlag = true;
+            return;
+        }
+
         if(GM.GameMode == GameModeEnum.RhythmAction)
         {
             if (!GM.ValidateNodeDistance())
@@ -90,13 +98,17 @@ public class CubeHandler : MonoBehaviour
         cubeMoveAnimation.Play("CubeMoveLeft");
         inputFlag = false;
         invokeCnt = 0;
-        InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 800.0f);
+        InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 160.0f / moveSpeed);
         LG.DestroyGarbageNode();
     }
 
     public void MoveRight()
     {
-        if (!inputFlag) return;
+        if (!inputFlag)
+        {
+            jumpFlag = true;
+            return;
+        }
         if (GM.GameMode == GameModeEnum.RhythmAction)
         {
             if (!GM.ValidateNodeDistance())
@@ -108,7 +120,7 @@ public class CubeHandler : MonoBehaviour
         cubeMoveAnimation.Play("CubeMoveRight");
         inputFlag = false;
         invokeCnt = 0;
-        InvokeRepeating("rotatingRight", 0.0f, 1.0f / 800.0f);
+        InvokeRepeating("rotatingRight", 0.0f, 1.0f / 160.0f / moveSpeed);
         LG.DestroyGarbageNode();
     }
 
@@ -130,6 +142,12 @@ public class CubeHandler : MonoBehaviour
             validateDirection(false);
             UM.AddScore();
             UM.GainPlayTime();
+
+            if(jumpFlag)
+            {
+                jumpFlag = false;
+                MoveLeft();
+            }
         }
     }
 
@@ -151,6 +169,11 @@ public class CubeHandler : MonoBehaviour
             validateDirection(true);
             UM.AddScore();
             UM.GainPlayTime();
+        }
+        if (jumpFlag)
+        {
+            jumpFlag = false;
+            MoveRight();
         }
     }
 

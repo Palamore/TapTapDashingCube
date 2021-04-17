@@ -85,9 +85,10 @@ public class GameManager : MonoBehaviour
         Destroy(LPoint);
         Destroy(RPoint);
     }
-
+    
     public bool ValidateNodeDistance()
     {
+        if (rightNodesQueue.Count == 0) return false;
         float dist = (rightNodesQueue.Peek().transform.position.x - leftNodesQueue.Peek().transform.position.x);
 
         if(rightNodesQueue.Count != 0)
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
             Destroy(Lnode);
         }
 
-        if (dist < 0.0f || dist > 40.0f)
+        if (dist < 0.0f || dist > 60.0f)
         {
             return false;
         }
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour
             rightNode.GetComponent<RhythmActionNode>().IsLeft = false;
             rightNodesQueue.Enqueue(rightNode);
 
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
 

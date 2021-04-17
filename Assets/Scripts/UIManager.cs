@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
     private Animation marathonScoreFx = null;
     public GameObject MarathonProgressBar = null;
     private float progressBarValue = 100.0f;
-    private float progressBarTension = 16.0f;
+
     public float ProgressBarTension
     {
         get { return progressBarTension; }
@@ -50,6 +50,53 @@ public class UIManager : MonoBehaviour
     public int NodeCount = 0;
     private int jumpCount = 0;
 
+    private float progressBarTension = 19.0f;
+
+
+    public void AddScore()
+    {
+        MarathonScore++;
+        jumpCount++;
+        if (MarathonScore % 20 == 0)
+        { // 10점씩 얻을 때마다 Bar의 감소 속도가 빨라짐.
+            if (progressBarTension < 30.0f)
+                progressBarTension += 1.0f;
+        }
+        MarathonScoreText.text = MarathonScore.ToString();
+        marathonScoreFx.Play("ScoreAnim");
+
+        if (jumpCount == NodeCount - 10)
+        {
+            LG.MakeNextLevel();
+        }
+        else if (jumpCount == NodeCount)
+        {
+            LG.SendNodeCount();
+            LG.SendRandValue();
+            jumpCount = 0;
+        }
+
+        if (MarathonScore % 100 == 0)
+        {
+            if (LG.RandMaxValue >= 5) // 1~4
+                LG.RandMaxValue--;
+        }
+    }
+
+    IEnumerator marathonTimer()
+    {
+        while (progressBarValue > 0)
+        {
+            // 16 / 60   0.26 1초에 16.0f
+            progressBarValue -= progressBarTension / 60.0f;
+            MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
+            yield return new WaitForSeconds(1.0f / 60.0f);
+        }
+        StopCoroutine(marathonTimer());
+        /// TO DO : 게임 오버 연출
+        Debug.Log("Game Over!");
+    }
+
 
     public void InitScores(GameModeEnum gameMode)
     {
@@ -63,6 +110,7 @@ public class UIManager : MonoBehaviour
         switch (gameMode)
         {
             case GameModeEnum.Marathon:
+                MarathonProgressBar.SetActive(true);
                 StartCoroutine(marathonTimer());
                 break;
             case GameModeEnum.TimeAttack:
@@ -78,28 +126,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void AddScore()
-    {
-        MarathonScore++;
-        jumpCount++;
-        if(MarathonScore % 10 == 0)
-        { // 10점씩 얻을 때마다 Bar의 감소 속도가 빨라짐.
-            progressBarTension+= 0.2f;
-        }
-        MarathonScoreText.text = MarathonScore.ToString();
-        marathonScoreFx.Play("ScoreAnim");
-
-        if(jumpCount == NodeCount - 10)
-        {
-            LG.MakeNextLevel();
-        }
-        else if(jumpCount == NodeCount)
-        {
-            LG.SendNodeCount();
-            LG.SendRandValue();
-            jumpCount = 0;
-        }
-    }
 
 
     IEnumerator timeAttackTimer()
@@ -116,18 +142,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-    IEnumerator marathonTimer()
-    {
-        while(progressBarValue > 0)
-        {
-            progressBarValue -= progressBarTension / 60.0f;
-            MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
-            yield return new WaitForSeconds(1.0f / 60.0f);
-        }
-        StopCoroutine(marathonTimer());
-        /// TO DO : 게임 오버 연출
-        Debug.Log("Game Over!");
-    }
 
     public void GainPlayTime()
     {

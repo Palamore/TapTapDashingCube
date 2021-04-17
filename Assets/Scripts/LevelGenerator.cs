@@ -21,8 +21,8 @@ public class LevelGenerator : MonoBehaviour
     public GameObject Dummy;
     public GameObject LastNode;
     public GameObject NodePrefab;
-    public int RandMaxValue = 7;
-    public int RandMinValue = 2;
+    public int RandMaxValue = 0;
+    public int RandMinValue = 0; // 2~6 개 사이의 블럭이 랜덤으로 생성.
 
     public const int generateIteration = 10;
     /// <summary>
@@ -44,10 +44,14 @@ public class LevelGenerator : MonoBehaviour
         UM = UIManager.Instance();
         CH = CubeHandler.Instance();
         GM = GameManager.Instance();
+
+        RandMinValue = 1;
+        RandMaxValue = 7;
     }
 
     void Start()
     {
+
         nodesContainer.Enqueue(Dummy);
         MakeNextLevel();
         SendRandValue();
