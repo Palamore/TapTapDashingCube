@@ -74,10 +74,6 @@ public class CubeHandler : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Collision Enter!");
-    }
 
     public void MoveLeft()
     {

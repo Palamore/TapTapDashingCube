@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private UIManager UM;
 
     public Camera MainCamera = null;
+    public GameObject PausePopup = null;
     public GameObject LPointPrefab;
     public GameObject RPointPrefab;
     private GameObject cube;
@@ -134,5 +135,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+        PausePopup.SetActive(true);
+    }
 
+    public void ResumeGame()
+    {
+        Time.timeScale = 1.0f;
+        PausePopup.SetActive(false);
+    }
 }
