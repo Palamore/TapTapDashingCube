@@ -28,6 +28,7 @@ public class CubeHandler : MonoBehaviour
     private bool dirRightFlag;
 
     private bool jumpFlag; /// TODO :: 입력 한번만, 플래그 세워서 받아주기.
+    private bool isRight;
 
     public int[] DirValidationValue = new int[generateIteration];
 
@@ -48,6 +49,7 @@ public class CubeHandler : MonoBehaviour
         inputFlag = true;
         dirRightFlag = true;
         jumpFlag = false;
+        isRight = true;
         DirValidationIndex = 0;
     }
 
@@ -80,6 +82,7 @@ public class CubeHandler : MonoBehaviour
         if (!inputFlag)
         {
             jumpFlag = true;
+            isRight = false;
             return;
         }
 
@@ -103,6 +106,7 @@ public class CubeHandler : MonoBehaviour
         if (!inputFlag)
         {
             jumpFlag = true;
+            isRight = true;
             return;
         }
         if (GM.GameMode == GameModeEnum.RhythmAction)
@@ -142,7 +146,10 @@ public class CubeHandler : MonoBehaviour
             if(jumpFlag)
             {
                 jumpFlag = false;
-                MoveLeft();
+                if (isRight)
+                    MoveRight();
+                else
+                    MoveLeft();
             }
         }
     }
@@ -169,7 +176,10 @@ public class CubeHandler : MonoBehaviour
         if (jumpFlag)
         {
             jumpFlag = false;
-            MoveRight();
+            if (isRight)
+                MoveRight();
+            else
+                MoveLeft();
         }
     }
 
