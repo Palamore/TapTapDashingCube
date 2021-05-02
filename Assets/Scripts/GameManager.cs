@@ -81,8 +81,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraTransform.position = cube.transform.position + new Vector3(
-            0.0f, 6.0f - cube.transform.position.y, -3.0f);
+        if (cube != null)
+            CameraTransform.position = cube.transform.position + new Vector3(
+                0.0f, 6.0f - cube.transform.position.y, -3.0f);
     }
 
 

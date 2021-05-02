@@ -8,7 +8,7 @@ Shader "ERB/Particles/Butterfly"
 		_Color("Color", Color) = (1,1,1,1)
 		_Emission("Emission", Float) = 1.5
 		_Speed("Speed", Float) = 20
-		_WingPower("Wing Power", Float) = 0.2
+		_WingPower("Wing Power", Float) = 0.3
 		_Wingmaxdown("Wing max down", Range( 0 , 1)) = 0.5
 	}
 

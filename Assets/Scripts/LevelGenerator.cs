@@ -21,6 +21,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject Dummy;
     public GameObject LastNode;
     public GameObject NodePrefab;
+    public GameObject GameOverPopup = null;
     public int RandMaxValue = 0;
     public int RandMinValue = 0; // 2~6 개 사이의 블럭이 랜덤으로 생성.
 
@@ -60,6 +61,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void DestroyGarbageNode()
     {
+        if (nodesContainer.Count == 0) return;
         Destroy(nodesContainer.Dequeue());
     }
 
@@ -134,5 +136,23 @@ public class LevelGenerator : MonoBehaviour
         UM.NodeCount = NodeCount;
     }
 
+
+    public void GameOver()
+    {
+
+        while (nodesContainer.Count != 0)
+            DestroyGarbageNode();
+
+        if (CH != null)
+            Destroy(CH.gameObject);
+
+        Invoke("PopupGameOver", 2.0f);
+    }
+
+
+    private void PopupGameOver()
+    {
+        GameOverPopup.SetActive(true);
+    }
 
 }

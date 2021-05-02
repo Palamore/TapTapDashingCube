@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelfDestructor : MonoBehaviour
+public class Node : MonoBehaviour
 {
+
+    public GameObject VFX;
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("SelfDestroy", 3.0f);
+        
     }
 
-
-    private void SelfDestroy()
+    private void OnDestroy()
     {
-        Destroy(gameObject);
+        Instantiate(VFX, gameObject.transform.position, Quaternion.identity);
     }
-
 }

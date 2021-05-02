@@ -32,6 +32,9 @@ public class CubeHandler : MonoBehaviour
 
     public int[] DirValidationValue = new int[generateIteration];
 
+    public GameObject VFXButterFly;
+    public GameObject VFXDestroy;
+
     private int dirValidationIndex;
     public int DirValidationIndex
     {
@@ -65,7 +68,7 @@ public class CubeHandler : MonoBehaviour
     void Update()
     {
 
-       if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
        {
            MoveLeft();
        }
@@ -76,6 +79,11 @@ public class CubeHandler : MonoBehaviour
 
     }
 
+
+    public void OnDestroy()
+    {
+        Instantiate(VFXDestroy, gameObject.transform.position, Quaternion.identity);
+    }
 
     public void MoveLeft()
     {
@@ -91,6 +99,7 @@ public class CubeHandler : MonoBehaviour
             if (!GM.ValidateNodeDistance())
                 return;
         }
+
 
         RotationPoint = GM.LPoint.transform;
         transform.SetParent(RotationPoint);
@@ -143,7 +152,8 @@ public class CubeHandler : MonoBehaviour
             UM.AddScore();
             UM.GainPlayTime();
 
-            if(jumpFlag)
+            Instantiate(VFXButterFly, gameObject.transform.position, Quaternion.identity);
+            if (jumpFlag)
             {
                 jumpFlag = false;
                 if (isRight)
@@ -172,14 +182,15 @@ public class CubeHandler : MonoBehaviour
             validateDirection(true);
             UM.AddScore();
             UM.GainPlayTime();
-        }
-        if (jumpFlag)
-        {
-            jumpFlag = false;
-            if (isRight)
-                MoveRight();
-            else
-                MoveLeft();
+            Instantiate(VFXButterFly, gameObject.transform.position, Quaternion.identity);
+            if (jumpFlag)
+            {
+                jumpFlag = false;
+                if (isRight)
+                    MoveRight();
+                else
+                    MoveLeft();
+            }
         }
     }
 
@@ -189,7 +200,7 @@ public class CubeHandler : MonoBehaviour
         if(dirRightFlag != isRight)
         {
             /// TO DO:: 게임 오버 연출
-            Debug.Log("Game Over!");
+            LG.GameOver();
             return;
         }
         DirValidationValue[DirValidationIndex]--;

@@ -89,12 +89,12 @@ public class UIManager : MonoBehaviour
         {
             // 16 / 60   0.26 1초에 16.0f
             progressBarValue -= progressBarTension / 60.0f;
-            MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
+            MarathonProgressBar.GetComponent<Image>().fillAmount = progressBarValue / 100.0f;
             yield return new WaitForSeconds(1.0f / 60.0f);
         }
         StopCoroutine(marathonTimer());
         /// TO DO : 게임 오버 연출
-        Debug.Log("Game Over!");
+        LG.GameOver();
     }
 
 
@@ -138,7 +138,7 @@ public class UIManager : MonoBehaviour
         }
         StopCoroutine(timeAttackTimer());
         /// TO DO : 게임 오버 연출
-        Debug.Log("Game Over!");
+        LG.GameOver();
 
     }
 
@@ -147,7 +147,7 @@ public class UIManager : MonoBehaviour
     {
         progressBarValue += 5.0f;
         if (progressBarValue >= 100.0f) progressBarValue = 100.0f;
-        MarathonProgressBar.transform.localScale = new Vector3(progressBarValue, 1.0f, 1.0f);
+        MarathonProgressBar.GetComponent<Image>().fillAmount = progressBarValue / 100.0f;
     }
 
 
