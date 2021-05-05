@@ -138,7 +138,7 @@ public class CubeHandler : MonoBehaviour
         RotationPoint.rotation = Quaternion.Euler(moveSpeed * invokeCnt, -45.0f, 0.0f);
         invokeCnt++;
 
-        if (invokeCnt >= 180 / moveSpeed)
+        if (invokeCnt > 180 / moveSpeed)
         {
             CancelInvoke("rotatingLeft");
             transform.parent = null;
@@ -169,7 +169,7 @@ public class CubeHandler : MonoBehaviour
         RotationPoint.rotation = Quaternion.Euler(moveSpeed * invokeCnt, 45.0f, 0.0f);
         invokeCnt++;
 
-        if (invokeCnt >= 180 / moveSpeed)
+        if (invokeCnt > 180 / moveSpeed)
         {
             CancelInvoke("rotatingRight");
             transform.parent = null;

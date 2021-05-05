@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public enum GameModeEnum
 {
     Marathon = 0,
@@ -54,7 +54,9 @@ public class GameManager : MonoBehaviour
     private Queue<GameObject> leftNodesQueue = new Queue<GameObject>();
     private Queue<GameObject> rightNodesQueue = new Queue<GameObject>();
 
-    
+
+    public GameObject[] BGPrefabs = new GameObject[12];
+
 
     private void Awake()
     {
@@ -76,6 +78,8 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(MakeRhythmNodes());
         }
+
+        BGPrefabs[Random.Range(0, BGPrefabs.Length)].SetActive(true);
     }
 
     // Update is called once per frame
@@ -146,5 +150,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         PausePopup.SetActive(false);
+    }
+
+    public void OnClickTitle()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnClickRetry()
+    {
+        SceneManager.LoadScene(1);
     }
 }
