@@ -62,6 +62,14 @@ public class LevelGenerator : MonoBehaviour
     public void DestroyGarbageNode()
     {
         if (nodesContainer.Count == 0) return;
+        GameObject node = nodesContainer.Dequeue();
+        node.GetComponent<Node>().MakeEffect();
+        Destroy(node);
+    }
+
+    public void JustDisappear()
+    {
+        if (nodesContainer.Count == 0) return;
         Destroy(nodesContainer.Dequeue());
     }
 

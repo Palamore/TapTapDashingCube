@@ -107,7 +107,7 @@ public class CubeHandler : MonoBehaviour
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 160.0f / moveSpeed);
-        LG.DestroyGarbageNode();
+        LG.JustDisappear();
     }
 
     public void MoveRight()
@@ -130,7 +130,7 @@ public class CubeHandler : MonoBehaviour
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingRight", 0.0f, 1.0f / 160.0f / moveSpeed);
-        LG.DestroyGarbageNode();
+        LG.JustDisappear();
     }
 
     private void rotatingLeft()

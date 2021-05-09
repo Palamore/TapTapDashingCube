@@ -14,6 +14,11 @@ public class Node : MonoBehaviour
 
     private void OnDestroy()
     {
+    }
+
+    public void MakeEffect()
+    {
         Instantiate(VFX, gameObject.transform.position, Quaternion.identity);
     }
+
 }
