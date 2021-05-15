@@ -155,6 +155,12 @@ public class LevelGenerator : MonoBehaviour
             Destroy(CH.gameObject);
 
         Invoke("PopupGameOver", 2.0f);
+
+        if(PlayerPrefs.GetInt("BestScore") < UM.MarathonScore)
+        {
+            PlayerPrefs.SetInt("BestScore", UM.MarathonScore);
+            PlayerPrefs.Save();
+        }
     }
 
 

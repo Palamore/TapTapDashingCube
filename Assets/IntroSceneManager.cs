@@ -2,21 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class IntroSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Text BestScoreTxt;
 
+
+
+    private void Awake()
+    {
+        if(PlayerPrefs.HasKey("BestScore"))
+        {
+            BestScoreTxt.text = PlayerPrefs.GetInt("BestScore").ToString();
+        }
+        else
+        {
+            BestScoreTxt.text = "0";
+            PlayerPrefs.SetInt("BestScore", 0);
+            PlayerPrefs.Save();
+        }
+    }
 
 
     public void MoveToGameScene()
