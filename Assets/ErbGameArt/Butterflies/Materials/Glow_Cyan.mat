@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Glow
+  m_Name: Glow_Cyan
   m_Shader: {fileID: 4800000, guid: 0cf829316e1cd234d9a4e7f11e48d64c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -34,4 +34,4 @@ Material:
     - _Wingmaxdown: 0
     - __dirty: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 1, b: 0.99999976, a: 1}

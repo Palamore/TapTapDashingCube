@@ -31,11 +31,23 @@ public class CubeHandler : MonoBehaviour
     private bool isRight;
 
     public int[] DirValidationValue = new int[generateIteration];
+    public int[] GimmickContainer = new int[10000];
 
     public GameObject VFXButterFly;
     public GameObject VFXDestroy;
 
     private int dirValidationIndex;
+    private int gimmickTriggerIndex;
+
+    public int GimmickTriggerIndex
+    {
+        get { return gimmickTriggerIndex; }
+        set
+        {
+            gimmickTriggerIndex = value;
+        }
+    }
+
     public int DirValidationIndex
     {
         get { return dirValidationIndex; }
@@ -45,7 +57,7 @@ public class CubeHandler : MonoBehaviour
         }
     }
 
-    void Start()
+    CubeHandler()
     {
         invokeCnt = 0;
 
@@ -54,6 +66,12 @@ public class CubeHandler : MonoBehaviour
         jumpFlag = false;
         isRight = true;
         DirValidationIndex = 0;
+        GimmickTriggerIndex = 0;
+    }
+
+    void Start()
+    {
+
     }
 
     void Awake()
@@ -62,6 +80,7 @@ public class CubeHandler : MonoBehaviour
         UM = UIManager.Instance();
         LG = LevelGenerator.Instance();
         cubeMoveAnimation = this.GetComponent<Animation>();
+
     }
 
     // Update is called once per frame
@@ -76,6 +95,8 @@ public class CubeHandler : MonoBehaviour
        {
            MoveRight();
        }
+       
+
 
     }
 
@@ -209,6 +230,14 @@ public class CubeHandler : MonoBehaviour
             DirValidationIndex++;
             dirRightFlag = !dirRightFlag;
         }
+
+        GimmickTriggerIndex++;
+        if (GimmickContainer[GimmickTriggerIndex] == 1)
+        {
+            UM.StartFeverAction();
+            jumpFlag = false;
+        }
+
     }
 
 

@@ -24,6 +24,9 @@ public class UIManager : MonoBehaviour
         LG = LevelGenerator.Instance();
     }
 
+    public Button MoveLeftBtn;
+    public Button MoveRightBtn;
+
     public Text MarathonScoreText = null;
     public int MarathonScore = 0;
     private Animation marathonScoreFx = null;
@@ -43,6 +46,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject RhythmActionNodesBar;
 
+    public GameObject FeverActionGimmickObject;
+
     public Transform LeftEndNodePos;
     public Transform RightEndNodePos;
 
@@ -51,6 +56,15 @@ public class UIManager : MonoBehaviour
     private int jumpCount = 0;
 
     private float progressBarTension = 19.0f;
+
+
+    public bool controlFlag = true;
+
+    private void Update()
+    {
+        if (!controlFlag)
+            progressBarValue = 100.0f;
+    }
 
 
     public void AddScore()
@@ -158,5 +172,28 @@ public class UIManager : MonoBehaviour
         return min.ToString() + ":" + sec.ToString();
     }
 
+    public void StartFeverAction()
+    {
+        MoveLeftBtn.interactable = false;
+        MoveRightBtn.interactable = false;
+        FeverActionGimmickObject.SetActive(true);
+    }
+
+    public void FailFeverAction()
+    {
+        MoveLeftBtn.interactable = true;
+        MoveRightBtn.interactable = true;
+
+    }
+
+    public void SuccessFeverAction()
+    {
+        controlFlag = false;
+    }
+
+    public void EndFeverAction()
+    {
+        controlFlag = true;
+    }
 
 }

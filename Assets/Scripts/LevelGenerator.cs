@@ -22,6 +22,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject LastNode;
     public GameObject NodePrefab;
     public GameObject GameOverPopup = null;
+    public GameObject GimmickBall;
     public int RandMaxValue = 0;
     public int RandMinValue = 0; // 2~6 개 사이의 블럭이 랜덤으로 생성.
 
@@ -36,9 +37,10 @@ public class LevelGenerator : MonoBehaviour
     private int[] randValues = new int[generateIteration];
 
     public int NodeCount = 0;
+    public int WholeNodeCount = 0;
 
     private Queue<GameObject> nodesContainer = new Queue<GameObject>();
-
+    public Queue<GameObject> gimmickBallContainer = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -48,6 +50,11 @@ public class LevelGenerator : MonoBehaviour
 
         RandMinValue = 1;
         RandMaxValue = 7;
+    }
+
+    LevelGenerator()
+    {
+
     }
 
     void Start()
@@ -114,7 +121,12 @@ public class LevelGenerator : MonoBehaviour
             dirFlag = !dirFlag;
             randInd++;
         }
+        CH.GimmickContainer[WholeNodeCount] = 1;
+        gimmickBallContainer.Enqueue(Instantiate(GimmickBall, LastNode.transform.position + new Vector3(0.0f, 0.13f, 0.0f) , Quaternion.identity));
+
     }
+
+
 
     private void generateSingleNode(bool isRight)
     {
@@ -136,7 +148,7 @@ public class LevelGenerator : MonoBehaviour
             LastNode = newNode;
         }
         NodeCount++;
-
+        WholeNodeCount++;
     }
 
     public void SendNodeCount()
