@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     private Queue<GameObject> rightNodesQueue = new Queue<GameObject>();
 
 
-    public GameObject[] BGPrefabs = new GameObject[12];
+    public GameObject[] BGPrefabs = new GameObject[8];
 
 
     private void Awake()

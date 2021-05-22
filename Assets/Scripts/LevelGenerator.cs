@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class LevelGenerator : MonoBehaviour
 {
     private static LevelGenerator instance;
@@ -41,6 +41,9 @@ public class LevelGenerator : MonoBehaviour
 
     private Queue<GameObject> nodesContainer = new Queue<GameObject>();
     public Queue<GameObject> gimmickBallContainer = new Queue<GameObject>();
+
+    public Text ScoreText;
+    public Text BestScoreText;
 
     private void Awake()
     {
@@ -168,11 +171,19 @@ public class LevelGenerator : MonoBehaviour
 
         Invoke("PopupGameOver", 2.0f);
 
+        ScoreText.text = UM.MarathonScore.ToString();
         if(PlayerPrefs.GetInt("BestScore") < UM.MarathonScore)
         {
             PlayerPrefs.SetInt("BestScore", UM.MarathonScore + 1);
             PlayerPrefs.Save();
+            
         }
+        else
+        {
+            BestScoreText.text = "Best : " + PlayerPrefs.GetInt("BestScore").ToString();
+        }
+        
+
     }
 
 
