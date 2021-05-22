@@ -66,7 +66,7 @@ public class LevelGenerator : MonoBehaviour
         SendNodeCount();
     }
 
-    public void DestroyGarbageNode()
+    public void DestroyNodeWithEffect()
     {
         if (nodesContainer.Count == 0) return;
         GameObject node = nodesContainer.Dequeue();
@@ -74,7 +74,7 @@ public class LevelGenerator : MonoBehaviour
         Destroy(node);
     }
 
-    public void JustDisappear()
+    public void DestroyNode()
     {
         if (nodesContainer.Count == 0) return;
         Destroy(nodesContainer.Dequeue());
@@ -161,7 +161,7 @@ public class LevelGenerator : MonoBehaviour
     {
 
         while (nodesContainer.Count != 0)
-            DestroyGarbageNode();
+            DestroyNodeWithEffect();
 
         if (CH != null)
             Destroy(CH.gameObject);
@@ -170,7 +170,7 @@ public class LevelGenerator : MonoBehaviour
 
         if(PlayerPrefs.GetInt("BestScore") < UM.MarathonScore)
         {
-            PlayerPrefs.SetInt("BestScore", UM.MarathonScore);
+            PlayerPrefs.SetInt("BestScore", UM.MarathonScore + 1);
             PlayerPrefs.Save();
         }
     }

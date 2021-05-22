@@ -1356,8 +1356,8 @@ MonoBehaviour:
       colorBlindnessType: 0
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
+  m_ShowToolkit: 1
+  m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles:
@@ -1604,6 +1604,8 @@ MonoBehaviour:
   VFXButterFly: {fileID: 1128413885007942, guid: 1670a554b54ab5841ae9b1a0714cec62,
     type: 3}
   VFXDestroy: {fileID: 8366720453908258901, guid: eb409de5fae9c384d85451374e019ec3,
+    type: 3}
+  VFXCyanButterFly: {fileID: 6004838295343916740, guid: a3727c6187cc7524da3d2e136dbc017a,
     type: 3}
 --- !u!1001 &788354408
 PrefabInstance:

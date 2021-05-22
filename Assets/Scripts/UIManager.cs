@@ -18,11 +18,19 @@ public class UIManager : MonoBehaviour
     }
 
     LevelGenerator LG;
+    CubeHandler CH;
 
-    private void Start()
+    UIManager()
+    {
+
+    }
+
+    private void Awake()
     {
         LG = LevelGenerator.Instance();
+        CH = CubeHandler.Instance();
     }
+
 
     public Button MoveLeftBtn;
     public Button MoveRightBtn;
@@ -189,6 +197,7 @@ public class UIManager : MonoBehaviour
     public void SuccessFeverAction()
     {
         controlFlag = false;
+        CH.StartFeverJump();
     }
 
     public void EndFeverAction()

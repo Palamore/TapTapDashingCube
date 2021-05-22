@@ -9,15 +9,17 @@ public class Node : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     private void OnDestroy()
     {
+
     }
 
     public void MakeEffect()
     {
+
         Instantiate(VFX, gameObject.transform.position, Quaternion.identity);
     }
 

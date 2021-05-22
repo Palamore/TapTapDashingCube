@@ -35,9 +35,12 @@ public class CubeHandler : MonoBehaviour
 
     public GameObject VFXButterFly;
     public GameObject VFXDestroy;
+    public GameObject VFXCyanButterFly;
+    private GameObject targetVFX;
 
     private int dirValidationIndex;
     private int gimmickTriggerIndex;
+    private int feverJumpCount;
 
     public int GimmickTriggerIndex
     {
@@ -67,6 +70,7 @@ public class CubeHandler : MonoBehaviour
         isRight = true;
         DirValidationIndex = 0;
         GimmickTriggerIndex = 0;
+        feverJumpCount = 0;
     }
 
     void Start()
@@ -80,12 +84,14 @@ public class CubeHandler : MonoBehaviour
         UM = UIManager.Instance();
         LG = LevelGenerator.Instance();
         cubeMoveAnimation = this.GetComponent<Animation>();
-
+        targetVFX = VFXButterFly;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!UM.controlFlag)
+            return;
 
         if (Input.GetKeyDown(KeyCode.A))
        {
@@ -104,6 +110,26 @@ public class CubeHandler : MonoBehaviour
     public void OnDestroy()
     {
         Instantiate(VFXDestroy, gameObject.transform.position, Quaternion.identity);
+    }
+
+    public void StartFeverJump()
+    {
+        feverJumpCount = 15;
+        FeverJump();
+        targetVFX = VFXCyanButterFly;
+    }
+
+    private void FeverJump()
+    {
+        feverJumpCount--;
+        if(dirRightFlag)
+        {
+            MoveRight();
+        }
+        else
+        {
+            MoveLeft();
+        }
     }
 
     public void MoveLeft()
@@ -128,7 +154,7 @@ public class CubeHandler : MonoBehaviour
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingLeft", 0.0f, 1.0f / 160.0f / moveSpeed);
-        LG.JustDisappear();
+        LG.DestroyNode();
     }
 
     public void MoveRight()
@@ -151,7 +177,7 @@ public class CubeHandler : MonoBehaviour
         inputFlag = false;
         invokeCnt = 0;
         InvokeRepeating("rotatingRight", 0.0f, 1.0f / 160.0f / moveSpeed);
-        LG.JustDisappear();
+        LG.DestroyNode();
     }
 
     private void rotatingLeft()
@@ -173,7 +199,7 @@ public class CubeHandler : MonoBehaviour
             UM.AddScore();
             UM.GainPlayTime();
 
-            Instantiate(VFXButterFly, gameObject.transform.position, Quaternion.identity);
+            Instantiate(targetVFX, gameObject.transform.position, Quaternion.identity);
             if (jumpFlag)
             {
                 jumpFlag = false;
@@ -181,6 +207,14 @@ public class CubeHandler : MonoBehaviour
                     MoveRight();
                 else
                     MoveLeft();
+            }
+
+            if(feverJumpCount >0)
+                FeverJump();
+            else
+            {
+                UM.EndFeverAction();
+                targetVFX = VFXButterFly;
             }
         }
     }
@@ -203,7 +237,8 @@ public class CubeHandler : MonoBehaviour
             validateDirection(true);
             UM.AddScore();
             UM.GainPlayTime();
-            Instantiate(VFXButterFly, gameObject.transform.position, Quaternion.identity);
+            Instantiate(targetVFX, gameObject.transform.position, Quaternion.identity);
+
             if (jumpFlag)
             {
                 jumpFlag = false;
@@ -211,6 +246,14 @@ public class CubeHandler : MonoBehaviour
                     MoveRight();
                 else
                     MoveLeft();
+            }
+
+            if (feverJumpCount > 0)
+                FeverJump();
+            else
+            {
+                UM.EndFeverAction();
+                targetVFX = VFXButterFly;
             }
         }
     }
@@ -239,6 +282,8 @@ public class CubeHandler : MonoBehaviour
         }
 
     }
+
+    
 
 
 }
