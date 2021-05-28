@@ -60,9 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 90;
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Screen.SetResolution(1280, 720, true);
+
     }
 
     // Start is called before the first frame update

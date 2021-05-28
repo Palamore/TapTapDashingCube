@@ -13,7 +13,11 @@ public class IntroSceneManager : MonoBehaviour
 
     private void Awake()
     {
-        if(PlayerPrefs.HasKey("BestScore"))
+        Application.targetFrameRate = 90;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Screen.SetResolution(1280, 720, true);
+
+        if (PlayerPrefs.HasKey("BestScore"))
         {
             BestScoreTxt.text = PlayerPrefs.GetInt("BestScore").ToString();
         }

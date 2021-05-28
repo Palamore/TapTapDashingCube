@@ -189,7 +189,7 @@ public class LevelGenerator : MonoBehaviour
             string prefsKey = "BG" + GM.rand.ToString();
             PlayerPrefs.SetInt(prefsKey, 1);
             TrophyText.gameObject.SetActive(true);
-            TrophyText.text = "500 점 달성!\nTheme" + (GM.rand + 1).ToString() + " 획득";
+            TrophyText.text = "500 점 달성!\nTheme " + (GM.rand + 1).ToString() + " 획득";
         }
 
 
