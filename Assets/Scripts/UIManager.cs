@@ -203,6 +203,8 @@ public class UIManager : MonoBehaviour
     public void EndFeverAction()
     {
         controlFlag = true;
+        MoveLeftBtn.interactable = true;
+        MoveRightBtn.interactable = true;
     }
 
 }

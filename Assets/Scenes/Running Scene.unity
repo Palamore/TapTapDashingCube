@@ -359,6 +359,7 @@ MonoBehaviour:
   - {fileID: 297406424}
   - {fileID: 756378218}
   - {fileID: 291564602}
+  rand: 0
 --- !u!4 &169632829
 Transform:
   m_ObjectHideFlags: 0
@@ -853,6 +854,7 @@ MonoBehaviour:
   WholeNodeCount: 0
   ScoreText: {fileID: 891088716}
   BestScoreText: {fileID: 392195236}
+  TrophyText: {fileID: 2128969784}
 --- !u!1 &332107864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3065,6 +3067,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5196850426811412396, guid: 1f1161a13533849469519607cca27971,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -259
+      objectReference: {fileID: 0}
     - target: {fileID: 5196850426811412399, guid: 1f1161a13533849469519607cca27971,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -3130,6 +3137,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickRetry
       objectReference: {fileID: 0}
+    - target: {fileID: 5196850427055813719, guid: 1f1161a13533849469519607cca27971,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -259
+      objectReference: {fileID: 0}
     - target: {fileID: 5196850427055813737, guid: 1f1161a13533849469519607cca27971,
         type: 3}
       propertyPath: m_Sprite
@@ -3150,6 +3162,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2128969781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2128969784 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6953943153424089336, guid: 1f1161a13533849469519607cca27971,
+    type: 3}
+  m_PrefabInstance: {fileID: 2128969781}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2132412264
 GameObject:
   m_ObjectHideFlags: 0

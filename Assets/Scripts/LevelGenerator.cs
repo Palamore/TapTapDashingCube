@@ -44,6 +44,7 @@ public class LevelGenerator : MonoBehaviour
 
     public Text ScoreText;
     public Text BestScoreText;
+    public Text TrophyText;
 
     private void Awake()
     {
@@ -183,6 +184,14 @@ public class LevelGenerator : MonoBehaviour
             BestScoreText.text = "Best : " + PlayerPrefs.GetInt("BestScore").ToString();
         }
         
+        if(UM.MarathonScore >= 500)
+        {
+            string prefsKey = "BG" + GM.rand.ToString();
+            PlayerPrefs.SetInt(prefsKey, 1);
+            TrophyText.gameObject.SetActive(true);
+            TrophyText.text = "500 점 달성!\nTheme" + (GM.rand + 1).ToString() + " 획득";
+        }
+
 
     }
 

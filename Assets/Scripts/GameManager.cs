@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject[] BGPrefabs = new GameObject[8];
-
+    public int rand = 0;
 
     private void Awake()
     {
@@ -79,7 +79,42 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MakeRhythmNodes());
         }
 
-        BGPrefabs[Random.Range(0, BGPrefabs.Length)].SetActive(true);
+        if(DataContainer.theme == eBackGround.RANDOM)
+        {
+            rand = Random.Range(0, BGPrefabs.Length);
+            BGPrefabs[rand].SetActive(true);
+        }
+        else
+        {
+            switch(DataContainer.theme)
+            {
+                case eBackGround.CFLOW1 :
+                    BGPrefabs[0].SetActive(true);
+                    break;
+                case eBackGround.CFLOW2 :
+                    BGPrefabs[1].SetActive(true);
+                    break;
+                case eBackGround.CFLOW3 :
+                    BGPrefabs[2].SetActive(true);
+                    break;
+                case eBackGround.CFLOW4 :
+                    BGPrefabs[3].SetActive(true);
+                    break;
+                case eBackGround.RFLOW1 :
+                    BGPrefabs[4].SetActive(true);
+                    break;
+                case eBackGround.RFLOW2 :
+                    BGPrefabs[5].SetActive(true);
+                    break;
+                case eBackGround.RFLOW3 :
+                    BGPrefabs[6].SetActive(true);
+                    break;
+                case eBackGround.RFLOW4 :
+                    BGPrefabs[7].SetActive(true);
+                    break;
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -154,11 +189,13 @@ public class GameManager : MonoBehaviour
 
     public void OnClickTitle()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
     }
 
     public void OnClickRetry()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(1);
     }
 }
